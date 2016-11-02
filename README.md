@@ -1,4 +1,4 @@
-# nomailto
+# NoMailto:
 
 Chrome extension to block Mailto: links from opening automatically! 🙅📧
 
