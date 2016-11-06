@@ -6,8 +6,8 @@
   z-index: 1;
   padding: 20px;
   box-sizing: border-box;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.75);
+  background-color: rgb(0,0,);
+  background-color: rgba(10,10,10,0.75);
   text-align: center;
 }
 .blocker:before{
@@ -46,7 +46,10 @@
   max-width: 500px;
   box-sizing: border-box;
   width: 100%;
-  background: #fff;
+  /* Gradient for the Modal */
+  background: #f857a6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #f857a6 , #ff5858); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #f857a6 , #ff5858); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */     
   padding: 15px 30px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
