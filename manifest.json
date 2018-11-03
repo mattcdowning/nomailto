@@ -1,20 +1,18 @@
 {
   "manifest_version": 2,
   "name": "NoMailto:",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "browser_action": {
     "default_icon": "icon128.png"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": [
-        "jquery.min.js",
-        "jquery.modal.min.js",
-        "clipboard.min.js",
-        "content.js"
-      ]
-    }
-  ],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "jquery.min.js",
+      "jquery.modal.min.js",
+      "clipboard.min.js",
+      "content.js"
+    ]
+  }],
   "web_accessible_resources": ["nmtstyles.css"]
 }
