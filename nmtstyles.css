@@ -1,25 +1,38 @@
+a[href]:focus,
+button:focus,
+#dang:focus {
+  outline: 5px solid rebeccapurple !important;
+}
+
 .blocker {
   position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow: auto;
   z-index: 1;
   padding: 20px;
   box-sizing: border-box;
-  background-color: rgb(0,0,);
-  background-color: rgba(10,10,10,0.75);
+  background-color: rgb(0, 0, );
+  background-color: rgba(10, 10, 10, 0.75);
   text-align: center;
 }
-.blocker:before{
+
+.blocker:before {
   content: "";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
   margin-right: -0.05em;
 }
+
 .blocker.behind {
   background-color: transparent;
 }
+
 .modal {
   display: inline-block;
   vertical-align: middle;
@@ -37,27 +50,31 @@
   border-radius: 8px;
   text-align: left;
 }
-@media (min-width: 40em){
-.modal {
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  z-index: 2;
-  max-width: 500px;
-  box-sizing: border-box;
-  width: 100%;
-  /* Gradient for the Modal */
-  background: #f857a6; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #f857a6 , #ff5858); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #f857a6 , #ff5858); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */     
-  padding: 15px 30px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  border-radius: 8px;
-  text-align: left;
-}
+
+@media (min-width: 40em) {
+  .modal {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    box-sizing: border-box;
+    width: 100%;
+    /* Gradient for the Modal */
+    background: #f857a6;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #f857a6, #ff5858);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #f857a6, #ff5858);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding: 15px 30px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    border-radius: 8px;
+    text-align: left;
+  }
 
 }
 
