@@ -1,71 +1,83 @@
-// content.js
 $(function() {
-  var style = document.createElement('link')
-  style.rel = 'stylesheet'
-  style.type = 'text/css'
-  style.href = chrome.extension.getURL('nmtstyles.css')
+  ;(function() {
+    const $mailto = $("a[href^='mailto:']")
 
-  $("a[href^='mailto:']").on('click', function() {
-    ;(document.head || document.documentElement).appendChild(style)
-    event.preventDefault()
-    var mailaddress = $(this)
-      .attr('href')
-      .substring(7)
-    var mailhref = 'mailto:' + mailaddress
+    if ($mailto.length > 0) {
+      const style = document.createElement('link')
+      style.rel = 'stylesheet'
+      style.type = 'text/css'
+      style.href = chrome.extension.getURL('nmtstyles.css')
+      document.head.appendChild(style)
 
-    var copy =
-      '<button data-clipboard-text="' +
-      mailaddress +
-      '"style="cursor: pointer !important; text-decoration: none !important; color: black !important; border: 1px solid black !important; border-radius: 15px; !important; transition: color .15s ease-in !important; background-color: white !important; padding: .25rem .5rem !important; margin-right: 1rem !important;" id="copyToClip">Copy to clipboard</button>'
-    var open =
-      '<a href="' +
-      mailhref +
-      '" id="openDefault"><span style="cursor: pointer !important; text-decoration: none !important; color: black !important; border: 1px solid black !important; border-radius: 15px; !important; transition: color .15s ease-in !important; background-color: white !important; padding: .25rem .5rem !important; margin-right: 1rem !important;">Open default</span></a>'
-    var heading =
-      '<h2 style="font-size: 1rem !important; margin-bottom: 0 !important; text-align: center !important">NoMailto:</h2>'
-    var messageText =
-      '<h1 class="modal" style="font-size: 1.55rem !important; text-align: center !important; font-weight: 300 !important; margin: 0 0 1rem 0 !important;">Whoa! That\'s a mailto:</h1>'
-    var everything = heading + messageText + copy + open
-    var contain =
-      '<div tabindex="0" id="dang" style="margin: 0 auto !important; text-align: center !important; padding-bottom: 2rem !important;">' +
-      everything +
-      '</div>'
-    var message = $(contain).insertBefore(this)
+      $mailto.on('click', function(e) {
+        e.preventDefault()
+        const that = this
+        const mailaddress = $(this)
+          .attr('href')
+          .substring(7)
+        const mailhref = `mailto:${mailaddress}`
+        const copy = `
+          <div tabindex="0" id="nmt">
+            <h1 class="heading">NoMailto:</h1>
+            <h2 class="copy">Whoa! That's a mailto:</h2>
+            <button data-clipboard-text="${mailaddress}" class="copy-btn" id="copyToClip">Copy to clipboard</button>
+            <a href="${mailhref}" id="openDefault">Open default</a>
+            <div class="copied-container">
+              <p class="copied">Copied!</p>
+            </div>
+          </div>
+        `
 
-    $('#dang')
-      .modal()
-      .focus()
-
-    new Clipboard('#copyToClip')
-
-    function trapFocus(element, namespace) {
-      var focusableEls = element.querySelectorAll(
-          'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-        ),
-        firstFocusableEl = $('#dang'),
-        lastFocusableEl = focusableEls[focusableEls.length - 1],
-        KEYCODE_TAB = 9
-      element.addEventListener('keydown', function(e) {
-        var isTabPressed = e.key === 'Tab' || e.keyCode === KEYCODE_TAB
-
-        if (!isTabPressed) {
-          return
+        if ($('#nmt').length === 0) {
+          $(copy).insertBefore(this)
         }
 
-        if (e.shiftKey) {
-          /* shift + tab */ if (document.activeElement === firstFocusableEl) {
-            lastFocusableEl.focus()
-            e.preventDefault()
+        $('#nmt')
+          .modal()
+          .focus()
+
+        $(document).on('keydown', '#nmt', function(e) {
+          if (e.keyCode === 27) {
+            that.focus()
           }
-        } /* tab */ else {
-          if (document.activeElement === lastFocusableEl) {
+        })
+
+        $('.close-modal').on('click', function() {
+          that.focus()
+        })
+
+        $('#copyToClip').on('click', function() {
+          $('.copied').fadeIn()
+          setTimeout(() => {
+            $('.copied').fadeOut()
+            $(this).focus()
+          }, 1000)
+        })
+
+        new Clipboard('#copyToClip')
+
+        const theModal = document.getElementById('nmt')
+        const focusableEls = theModal.querySelectorAll('a[href], button')
+        const firstFocusableEl = theModal
+        const lastFocusableEl = focusableEls[focusableEls.length - 1]
+        const KEYCODE_TAB = 9
+
+        theModal.addEventListener('keydown', function(e) {
+          const isTabPressed = e.key === 'Tab' || e.keyCode === KEYCODE_TAB
+          if (!isTabPressed) {
+            return
+          }
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusableEl) {
+              lastFocusableEl.focus()
+              e.preventDefault()
+            }
+          } else if (document.activeElement === lastFocusableEl) {
             firstFocusableEl.focus()
             e.preventDefault()
           }
-        }
+        })
       })
     }
-    var theModal = $('#dang')[0]
-    trapFocus(theModal)
-  })
+  })()
 })
